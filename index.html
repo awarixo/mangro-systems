@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mangrosystems — Business AI Systems</title>
+<meta name="description" content="We design and build AI-powered systems that help businesses operate smarter — lead systems, customer support, internal tools, and data pipelines, built end to end.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mangrosystems.com/">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mangrosystems.com/">
+<meta property="og:title" content="Mangrosystems — Business AI Systems">
+<meta property="og:description" content="AI-powered systems that help businesses operate smarter. Built end to end, not stitched together from templates.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --paper: #FFFDF9;
+    --panel: #FBF4EA;
+    --line: #EAE0D0;
+    --orange: #FF6A00;
+    --orange-deep: #D9540A;
+    --ink: #1C1A15;
+    --muted: #78715F;
+    --serif: 'Fraunces', serif;
+    --sans: 'Inter', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  a { color: inherit; }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 56px;
+    background: rgba(255,253,249,0.9);
+    backdrop-filter: blur(10px);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 19px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--orange); }
+
+  .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+
+  .nav-links a {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+
+  .nav-cta {
+    border: 1px solid var(--ink);
+    padding: 9px 20px;
+    border-radius: 100px;
+    color: var(--ink) !important;
+    font-weight: 500 !important;
+    transition: background 0.2s, color 0.2s, border-color 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--ink); color: var(--paper) !important; }
+
+  /* HERO */
+  .hero {
+    padding: 100px 32px 120px;
+    text-align: center;
+    max-width: 880px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -120px;
+    right: -180px;
+    width: 480px;
+    height: 480px;
+    background: radial-gradient(circle, rgba(255,106,0,0.14) 0%, transparent 70%);
+    filter: blur(10px);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px;
+    left: -200px;
+    width: 380px;
+    height: 380px;
+    background: radial-gradient(circle, rgba(28,26,21,0.05) 0%, transparent 70%);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--orange-deep);
+    background: rgba(255,106,0,0.08);
+    border: 1px solid rgba(255,106,0,0.2);
+    padding: 6px 14px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 36px;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(38px, 6vw, 74px);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 28px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--orange);
+  }
+
+  .hero-sub {
+    font-size: 19px;
+    color: var(--muted);
+    max-width: 560px;
+    margin: 0 auto 44px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  .hero-actions { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--orange);
+    color: #fff;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--orange-deep); transform: translateY(-1px); }
+
+  .btn-ghost {
+    color: var(--muted);
+    font-size: 14px;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-color: var(--line);
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--ink); }
+
+  /* SYSTEMS FLOW DIAGRAM */
+  .flow-band {
+    background: var(--panel);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 90px 32px;
+  }
+
+  .flow-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .flow-eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--orange-deep);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+
+  .flow-title {
+    font-family: var(--serif);
+    font-size: clamp(26px, 3vw, 38px);
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .flow-split {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 80px;
+    align-items: start;
+    text-align: left;
+  }
+
+  .flow-intro { position: sticky; top: 120px; }
+
+  .flow-intro p {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.7;
+    margin-top: 16px;
+    max-width: 320px;
+  }
+
+  .flow-steps { display: flex; flex-direction: column; }
+
+  .flow-node {
+    position: relative;
+    padding: 0 0 56px 76px;
+  }
+
+  .flow-node:last-child { padding-bottom: 0; }
+
+  .flow-node::before {
+    content: '';
+    position: absolute;
+    left: 27px;
+    top: 56px;
+    bottom: 0;
+    width: 1px;
+    background: var(--line);
+  }
+
+  .flow-node:last-child::before { display: none; }
+
+  .flow-mark {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 1.5px solid var(--orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--orange-deep);
+  }
+
+  .flow-node h3 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    padding-top: 12px;
+  }
+
+  .flow-node p {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.65;
+    max-width: 440px;
+  }
+
+  @media (max-width: 800px) {
+    .flow-split { grid-template-columns: 1fr; gap: 40px; }
+    .flow-intro { position: static; }
+  }
+
+  /* SECTION SHARED */
+  section {
+    padding: 110px 32px;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .section-head { text-align: center; margin-bottom: 72px; }
+
+  .build-split {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .build-intro { position: sticky; top: 120px; text-align: left; }
+
+  .build-intro p {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.7;
+    margin-top: 16px;
+    max-width: 280px;
+  }
+
+  @media (max-width: 800px) {
+    .build-split { grid-template-columns: 1fr; gap: 32px; }
+    .build-intro { position: static; }
+  }
+
+  .section-eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--orange-deep);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(28px, 3.5vw, 42px);
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  /* WHAT WE BUILD — editorial row list */
+  .build-list { display: flex; flex-direction: column; }
+
+  .build-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 40px;
+    padding: 40px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .build-row:last-child { border-bottom: 1px solid var(--line); }
+
+  .build-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--orange-deep);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding-top: 6px;
+  }
+
+  .build-row h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+
+  .build-row p {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.7;
+    max-width: 640px;
+  }
+
+  @media (max-width: 700px) {
+    .build-row { grid-template-columns: 1fr; gap: 12px; }
+  }
+
+  /* CLIENT PROOF — stacked pull quotes */
+  .proof-stack { display: flex; flex-direction: column; gap: 56px; }
+
+  .proof-quote {
+    font-family: var(--serif);
+    font-size: clamp(20px, 2.4vw, 27px);
+    font-weight: 400;
+    line-height: 1.45;
+    color: var(--ink);
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .proof-quote span { color: var(--orange); }
+
+  .proof-author {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-align: center;
+    margin-top: 18px;
+  }
+
+  /* FINAL CTA */
+  .cta-band {
+    background: var(--ink);
+    padding: 110px 32px;
+    text-align: center;
+  }
+
+  .cta-band .section-eyebrow { color: var(--orange); }
+
+  .cta-band h2 {
+    color: #fff;
+    max-width: 640px;
+    margin: 0 auto 18px;
+  }
+
+  .cta-band p {
+    color: rgba(255,255,255,0.55);
+    font-size: 16px;
+    max-width: 480px;
+    margin: 0 auto 40px;
+  }
+
+  .availability {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 28px;
+  }
+
+  .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--orange);
+    animation: pulse 1.6s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.75); }
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  footer .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; color: var(--ink); }
+  footer .logo span { color: var(--orange); }
+
+  footer p {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* WhatsApp float */
+  .wa-float { position: fixed; bottom: 28px; right: 28px; z-index: 999; }
+
+  .wa-btn {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: #25D366; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 24px rgba(37,211,102,0.4);
+    transition: transform 0.18s ease;
+    text-decoration: none;
+  }
+  .wa-btn:hover { transform: scale(1.08); }
+  .wa-btn svg { width: 28px; height: 28px; }
+
+  @media (max-width: 700px) {
+    nav { padding: 18px 24px; }
+    .nav-links { gap: 20px; }
+    .nav-links li:not(:last-child) { display: none; }
+    .hero { padding: 72px 24px 80px; }
+    .flow-band { padding: 64px 24px; }
+    section { padding: 72px 24px; }
+    footer { padding: 28px 24px; flex-direction: column; gap: 10px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">MANGRO<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#how">Process</a></li>
+    <li><a href="#build">Work</a></li>
+    <li><a href="https://cal.com/awariyusuf02/30min" target="_blank" rel="noopener" class="nav-cta">Get Started</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="kicker">Business AI Systems</div>
+  <h1>Systems that help you<br>operate <em>smarter</em>.</h1>
+  <p class="hero-sub">Most founders end up managing the business instead of running it — too many tools, too many projects, no real oversight tying it together. We build the systems that give that back.</p>
+  <div class="hero-actions">
+    <a href="https://cal.com/awariyusuf02/30min" target="_blank" rel="noopener" class="btn-primary">Start with an audit</a>
+    <a href="#build" class="btn-ghost">See what we've built</a>
+  </div>
+</div>
+
+<!-- SYSTEMS FLOW -->
+<div class="flow-band" id="how">
+  <div class="flow-inner">
+    <div class="flow-split">
+      <div class="flow-intro">
+        <div class="flow-eyebrow">Process</div>
+        <h2 class="flow-title">A system, not a template.</h2>
+        <p>Most automation work is someone connecting apps and hoping it holds. This is what we actually do instead, in order, every time.</p>
+      </div>
+
+      <div class="flow-steps">
+        <div class="flow-node">
+          <div class="flow-mark">01</div>
+          <h3>Audit</h3>
+          <p>We look at how the business actually runs today, the tools, the manual steps, the bottlenecks, before recommending anything. Process first, AI second.</p>
+        </div>
+        <div class="flow-node">
+          <div class="flow-mark">02</div>
+          <h3>Build</h3>
+          <p>AI agents, integrations, backend logic, data pipelines, whatever the process actually needs, built for that specific problem, not assembled from a generic template.</p>
+        </div>
+        <div class="flow-node">
+          <div class="flow-mark">03</div>
+          <h3>Run &amp; Handover</h3>
+          <p>Deployed, documented, and handed to you. You own the system, the data, and the workflows, not us.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHAT WE BUILD -->
+<section id="build">
+  <div class="build-split">
+    <div class="build-intro">
+      <div class="section-eyebrow">Systems We've Built</div>
+      <h2>Real systems,<br>real processes.</h2>
+      <p>A sample of the kind of operational work behind the pitch, not a highlight reel.</p>
+    </div>
+
+    <div class="build-list">
+    <div class="build-row">
+      <div class="build-tag">Revenue Intelligence</div>
+      <div>
+        <h3>Revenue &amp; Business Dashboard</h3>
+        <p>Built a revenue and business-intelligence dashboard for a hospitality business doing roughly $900K/year, pulling live from their CRM to track monthly revenue, top customers, and upsell activity — turning raw CRM data into a decision-making tool.</p>
+      </div>
+    </div>
+    <div class="build-row">
+      <div class="build-tag">Voice AI</div>
+      <div>
+        <h3>Production Voice Agent</h3>
+        <p>Built a live voice agent for a multi-branch automotive business handling bookings, cancellations, rescheduling, and tire recommendations across a 25,000+ SKU catalog — verified against the company's real booking backend, not a mock.</p>
+      </div>
+    </div>
+    <div class="build-row">
+      <div class="build-tag">Data Enrichment</div>
+      <div>
+        <h3>Unattended Enrichment Pipeline</h3>
+        <p>Built and deployed a production pipeline processing 14,000+ product records — researching specs, manufacturer data, and documentation using OCR and LLM vision, running unattended as a monitored service with automatic recovery.</p>
+      </div>
+    </div>
+    <div class="build-row">
+      <div class="build-tag">Outbound Systems</div>
+      <div>
+        <h3>AI-Personalized Outreach</h3>
+        <p>Built and ran an AI-personalized outbound campaign for an accounting firm using enrichment and pain-point-driven personalization — 13 positive responses and 7 booked meetings in the first month.</p>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENT PROOF -->
+<section id="proof">
+  <div class="section-head">
+    <div class="section-eyebrow">Client Proof</div>
+    <h2>What clients say.</h2>
+  </div>
+
+  <div class="proof-stack">
+    <div>
+      <p class="proof-quote"><span>“</span>We hired Yusuf to generate sales through e-mail marketing but he gave us more. We still get calls after months of closing the assigned task.<span>”</span></p>
+      <div class="proof-author">Taiwo K. · MD/CEO, Limelight Media</div>
+    </div>
+    <div>
+      <p class="proof-quote"><span>“</span>Yusuf was exceptional, worked with my firm to build and deploy internal AI systems we needed for operational use cases.<span>”</span></p>
+      <div class="proof-author">Mashood Q. · Professional Services</div>
+    </div>
+    <div>
+      <p class="proof-quote"><span>“</span>Yusuf did an outstanding job building my company's database, dynamic data dashboard, and AI automations.<span>”</span></p>
+      <div class="proof-author">Upwork Client · 5.0 Rating</div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<div class="cta-band">
+  <div class="section-eyebrow">Get Started</div>
+  <h2>Still the one holding it all together?</h2>
+  <p>If most of the business only runs because you're personally keeping track of it, that's the first thing worth fixing. Let's talk through what a real system looks like.</p>
+  <a href="https://cal.com/awariyusuf02/30min" target="_blank" rel="noopener" class="btn-primary">Start with an audit</a>
+  <div class="availability"><span class="dot"></span>Taking on new systems this month</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">MANGRO<span>.</span></div>
+  <p>Business AI Systems</p>
+  <p>© 2026 Mangrosystems</p>
+</footer>
+
+<div class="wa-float">
+  <a class="wa-btn" href="https://wa.me/2349134447328?text=Hi%20Yusuf%2C%20I%27d%20like%20to%20talk%20about%20a%20system%20for%20my%20business." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16 2C8.268 2 2 8.268 2 16c0 2.49.648 4.829 1.782 6.86L2 30l7.34-1.754A13.93 13.93 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z" fill="#fff"/>
+      <path d="M22.003 19.356c-.306-.153-1.81-.894-2.09-.996-.28-.102-.484-.153-.688.153-.204.306-.79.996-.968 1.2-.178.204-.357.23-.663.077-.306-.153-1.292-.476-2.461-1.518-.91-.812-1.524-1.814-1.702-2.12-.178-.306-.019-.471.134-.623.137-.136.306-.357.459-.535.153-.178.204-.306.306-.51.102-.204.051-.382-.026-.535-.077-.153-.688-1.658-.942-2.27-.248-.597-.5-.516-.688-.526l-.587-.01c-.204 0-.535.077-.815.382-.28.306-1.07 1.045-1.07 2.55 0 1.505 1.095 2.958 1.248 3.162.153.204 2.155 3.29 5.22 4.614.73.315 1.3.503 1.744.644.733.233 1.4.2 1.927.121.588-.088 1.81-.74 2.065-1.455.255-.714.255-1.326.178-1.455-.076-.128-.28-.204-.586-.357z" fill="#25D366"/>
+    </svg>
+  </a>
+</div>
+
+</body>
+</html>
