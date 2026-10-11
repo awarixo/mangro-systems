@@ -85,9 +85,8 @@
   .nav-cta:hover { background: var(--ink); color: var(--paper) !important; }
 
   .hero {
-    padding: 100px 32px 90px;
-    text-align: center;
-    max-width: 880px;
+    padding: 90px 32px 90px;
+    max-width: 1180px;
     margin: 0 auto;
     position: relative;
   }
@@ -103,6 +102,72 @@
     filter: blur(10px);
     z-index: -1;
     pointer-events: none;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .hero-copy { text-align: left; }
+
+  .hero-video {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    border-radius: 20px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-video video, .hero-video iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    object-fit: cover;
+  }
+
+  .hero-video-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    color: var(--muted);
+    font-size: 13px;
+    text-align: center;
+    padding: 0 24px;
+  }
+
+  .play-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(255,106,0,0.35);
+  }
+
+  .play-btn::after {
+    content: '';
+    border-style: solid;
+    border-width: 10px 0 10px 16px;
+    border-color: transparent transparent transparent #fff;
+    margin-left: 2px;
+  }
+
+  @media (max-width: 860px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+    .hero-copy { text-align: center; }
   }
 
   .kicker {
@@ -136,13 +201,18 @@
   .hero-sub {
     font-size: 19px;
     color: var(--muted);
-    max-width: 600px;
-    margin: 0 auto 44px;
+    max-width: 520px;
+    margin: 0 0 36px;
     font-weight: 400;
     line-height: 1.6;
   }
 
-  .hero-actions { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; margin-bottom: 14px; }
+  .hero-actions { display: flex; align-items: center; justify-content: flex-start; gap: 18px; flex-wrap: wrap; margin-bottom: 14px; }
+
+  @media (max-width: 860px) {
+    .hero-sub { margin: 0 auto 36px; }
+    .hero-actions { justify-content: center; }
+  }
 
   .btn-primary {
     background: var(--orange);
@@ -275,13 +345,24 @@
 
 <!-- HERO -->
 <div class="hero">
-  <div class="kicker">European Deal Sourcing</div>
-  <h1>Every European business-for-sale listing, in <em>one feed</em>.</h1>
-  <p class="hero-sub">Stop logging into fifteen different national broker sites. We scrape, translate, deduplicate, and match deals from across the UK and Europe against exactly what you're looking for — and the first month's free.</p>
-  <div class="hero-actions">
-    <a href="https://cal.com/awariyusuf02/30min" target="_blank" rel="noopener" class="btn-primary">Start my free month</a>
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <div class="kicker">European Deal Sourcing</div>
+      <h1>Every European business-for-sale listing, in <em>one feed</em>.</h1>
+      <p class="hero-sub">Stop logging into fifteen different national broker sites. We scrape, translate, deduplicate, and match deals from across the UK and Europe against exactly what you're looking for — and the first month's free.</p>
+      <div class="hero-actions">
+        <a href="https://cal.com/awariyusuf02/30min" target="_blank" rel="noopener" class="btn-primary">Start my free month</a>
+      </div>
+      <p class="hero-note">No card required. One short call to set up your mandate.</p>
+    </div>
+    <div class="hero-video">
+      <!-- VSL placeholder: replace this block with a <video src="..."> or embed iframe once filmed -->
+      <div class="hero-video-placeholder">
+        <div class="play-btn"></div>
+        <span>60-second walkthrough — video coming soon</span>
+      </div>
+    </div>
   </div>
-  <p class="hero-note">No card required. One short call to set up your mandate.</p>
 </div>
 
 <!-- PROBLEM -->
