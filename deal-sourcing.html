@@ -20,22 +20,21 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Lora:ital,wght@0,400;0,500;1,400&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --paper: #FFFDF9;
-    --panel: #FBF4EA;
-    --line: #EAE0D0;
-    --orange: #FF6A00;
-    --orange-deep: #D9540A;
-    --ink: #1C1A15;
-    --muted: #78715F;
-    --serif: 'Fraunces', serif;
-    --sans: 'Inter', sans-serif;
-    --mono: 'IBM Plex Mono', monospace;
+    --paper: #F5F4F1;
+    --panel: #ECEBE7;
+    --line: rgba(35,38,43,0.12);
+    --orange: #7C9A92;
+    --orange-deep: #6B8880;
+    --ink: #23262B;
+    --muted: #6E7278;
+    --serif: 'Lora', Georgia, serif;
+    --sans: 'Work Sans', system-ui, sans-serif;
   }
 
   html { scroll-behavior: smooth; }
@@ -91,19 +90,6 @@
     position: relative;
   }
 
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -120px;
-    right: -180px;
-    width: 480px;
-    height: 480px;
-    background: radial-gradient(circle, rgba(255,106,0,0.14) 0%, transparent 70%);
-    filter: blur(10px);
-    z-index: -1;
-    pointer-events: none;
-  }
-
   .hero-grid {
     display: grid;
     grid-template-columns: 1.1fr 1fr;
@@ -117,7 +103,7 @@
     position: relative;
     aspect-ratio: 16 / 9;
     width: 100%;
-    border-radius: 20px;
+    border-radius: 2px;
     background: var(--panel);
     border: 1px solid var(--line);
     overflow: hidden;
@@ -154,7 +140,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 8px 24px rgba(255,106,0,0.35);
+    box-shadow: 0 8px 24px rgba(124,154,146,0.35);
   }
 
   .play-btn::after {
@@ -171,19 +157,13 @@
   }
 
   .kicker {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--orange-deep);
-    background: rgba(255,106,0,0.08);
-    border: 1px solid rgba(255,106,0,0.2);
-    padding: 6px 14px;
-    border-radius: 100px;
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--muted);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 36px;
+    letter-spacing: 0.14em;
+    margin-bottom: 20px;
   }
 
   h1 {
@@ -220,22 +200,22 @@
     font-family: var(--sans);
     font-size: 15px;
     font-weight: 600;
-    padding: 15px 30px;
+    padding: 14px 28px;
     border: none;
-    border-radius: 100px;
+    border-radius: 2px;
     cursor: pointer;
     text-decoration: none;
     display: inline-block;
-    transition: background 0.2s, transform 0.15s;
+    transition: background 0.2s;
   }
-  .btn-primary:hover { background: var(--orange-deep); transform: translateY(-1px); }
+  .btn-primary:hover { background: var(--orange-deep); }
 
   .hero-note { font-size: 13px; color: var(--muted); }
 
   section { padding: 80px 32px; max-width: 980px; margin: 0 auto; }
 
   .section-eyebrow {
-    font-family: var(--mono);
+    font-family: var(--sans); font-weight: 500;
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -262,12 +242,12 @@
   .card {
     background: var(--panel);
     border: 1px solid var(--line);
-    border-radius: 16px;
+    border-radius: 2px;
     padding: 28px 24px;
   }
 
   .card .num {
-    font-family: var(--mono);
+    font-family: var(--sans); font-weight: 500;
     font-size: 13px;
     color: var(--orange-deep);
     margin-bottom: 12px;
@@ -301,14 +281,14 @@
   .trial-box {
     background: var(--panel);
     border: 1px solid var(--line);
-    border-radius: 20px;
+    border-radius: 2px;
     padding: 40px;
     margin-top: 32px;
   }
   .trial-box ul { list-style: none; display: grid; gap: 10px; margin-bottom: 24px; }
   .trial-box li { font-size: 15px; color: var(--ink); display: flex; gap: 10px; }
   .trial-box li::before { content: '✓'; color: var(--orange-deep); font-weight: 600; }
-  .trial-price { font-family: var(--mono); font-size: 14px; color: var(--muted); margin-bottom: 20px; }
+  .trial-price { font-family: var(--sans); font-weight: 500; font-size: 14px; color: var(--muted); margin-bottom: 20px; }
 
   .cta-band {
     background: var(--ink);
@@ -318,7 +298,7 @@
   }
   .cta-band .section-eyebrow { color: var(--orange); }
   .cta-band h2 { color: var(--paper); margin: 0 auto 20px; }
-  .cta-band p { color: #D8D2C4; max-width: 540px; margin: 0 auto 32px; }
+  .cta-band p { color: rgba(255,255,255,0.55); max-width: 540px; margin: 0 auto 32px; }
 
   footer {
     padding: 40px 32px;
@@ -389,7 +369,7 @@
 </section>
 
 <!-- HOW IT WORKS -->
-<section style="background: var(--panel); border-radius: 28px;">
+<section style="background: var(--panel);">
   <div class="section-eyebrow">How It Works</div>
   <h2>Scrape. Translate. Match. Deliver.</h2>
   <div class="grid-3">
