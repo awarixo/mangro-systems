@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>European Market Map | Mangrosystems</title>
-<meta name="description" content="A live map of the European small-business sale market: every business-for-sale listing we track across 16 countries, refreshed every morning. Free market numbers; sign up to browse the listings.">
+<meta name="description" content="A live map of the European small-business sale market: every business-for-sale listing we track across 15 countries, refreshed every morning. Free market numbers; sign up to browse the listings.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://mangrosystems.com/market/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mangrosystems.com/market/">
 <meta property="og:title" content="The European small-business market, live">
-<meta property="og:description" content="Every business-for-sale listing across 16 European countries, refreshed daily. Browse by country, sector and size.">
+<meta property="og:description" content="Every business-for-sale listing across 15 European countries, refreshed daily. Browse by country, sector and size.">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -180,9 +180,9 @@
       <div>
         <div class="eyebrow">Browse the listings</div>
         <h2>See every listing behind these numbers.</h2>
-        <p class="muted">Free. Tell us who you are and we email you an access link.</p>
+        <p class="muted">Free. Tell us who you are and what you're looking for, and you're in.</p>
         <ul>
-          <li>All live listings across 16 countries, refreshed daily</li>
+          <li>All live listings across <span id="g-countries">15</span> countries, refreshed daily</li>
           <li>Filter by country, sector, turnover, retirement sales and stated earnings</li>
           <li>Each listing's figures in one consistent format, in English</li>
           <li>Want the links to the ones you like? Start a free week and we send them, plus new matches twice a week</li>
@@ -210,7 +210,7 @@
           <div class="field"><label for="f-size">Deal size</label><input id="f-size" name="size" placeholder="e.g. €500k to €3M EBITDA"></div>
         </div>
         <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <button class="btn" type="submit" id="f-go">Email me access</button>
+        <button class="btn" type="submit" id="f-go">Get free access</button>
         <p class="msg" id="f-msg" role="status"></p>
       </form>
     </div>
@@ -305,7 +305,7 @@
   fetch("/api/market-stats").then(function (r) { return r.json(); }).then(function (s) {
     var real = s.countries.filter(function (c) { return c[0] !== "Other / unknown"; });
     $("s-total").textContent = fmt(down(s.total, 1000)) + "+";
-    $("s-countries").textContent = real.length;
+    $("s-countries").textContent = real.length; $("g-countries").textContent = real.length;
     $("s-1m").textContent = fmt(down(s.turnover_over_1m, 1000)) + "+";
     $("s-earn").textContent = fmt(down(s.with_earnings, 1000)) + "+";
     $("s-ret").textContent = fmt(down(s.retirement, 1000)) + "+";
