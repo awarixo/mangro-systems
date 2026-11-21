@@ -5,7 +5,8 @@
 (function () {
   if (!/mangrosystems\.com$/.test(location.hostname)) return; // skip localhost and previews
 
-  var page = location.pathname.indexOf("/deals") === 0 ? "/deals/" : "/";
+  var path = location.pathname;
+  var page = path.indexOf("/deals") === 0 ? "/deals/" : path.indexOf("/market") === 0 ? "/market/" : "/";
   var sid;
   try {
     sid = sessionStorage.getItem("mg_sid");
@@ -34,13 +35,14 @@
     fetch("/api/track", { method: "POST", headers: { "Content-Type": "application/json" }, body: payload, keepalive: true }).catch(function () {});
   }
 
+  window.mgTrack = send;
   send("pageview");
 
   document.addEventListener("click", function (e) {
     var a = e.target.closest && e.target.closest("a");
     if (!a) return;
     var href = a.getAttribute("href") || "";
-    if (/cal\.com|^mailto:|wa\.me|^\/deals/.test(href)) {
+    if (/cal\.com|^mailto:|wa\.me|^\/deals|^\/market/.test(href)) {
       send("cta_click", { cta: (a.textContent || "").trim().slice(0, 60) + " -> " + href.split("?")[0] });
     }
   });

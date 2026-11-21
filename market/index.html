@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>European Market Map | Mangrosystems</title>
+<meta name="description" content="A live map of the European small-business sale market: every business-for-sale listing we track across 16 countries, refreshed every morning. Free market numbers; sign up to browse the listings.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mangrosystems.com/market/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mangrosystems.com/market/">
+<meta property="og:title" content="The European small-business market, live">
+<meta property="og:description" content="Every business-for-sale listing across 16 European countries, refreshed daily. Browse by country, sector and size.">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Lora:ital,wght@0,400;0,500;1,400&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --paper: #F5F4F1; --panel: #ECEBE7; --line: rgba(35,38,43,0.12); --accent: #7C9A92; --accent-deep: #6B8880;
+    --ink: #23262B; --muted: #6E7278; --serif: 'Lora', Georgia, serif; --sans: 'Work Sans', system-ui, sans-serif;
+  }
+  [hidden] { display: none !important; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.6; }
+  a { color: inherit; }
+  button, input, select, textarea { font: inherit; color: inherit; }
+
+  nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 20px 56px; background: rgba(245,244,241,0.92); backdrop-filter: blur(10px); }
+  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 19px; color: var(--ink); text-decoration: none; }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+  .nav-links a { text-decoration: none; font-size: 13px; font-weight: 500; color: var(--muted); }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta { border: 1px solid var(--ink); padding: 8px 18px; border-radius: 100px; color: var(--ink) !important; }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 56px; }
+  .hero { padding: 72px 0 40px; }
+  .kicker { font-size: 13px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 18px; }
+  h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(32px, 5vw, 56px); line-height: 1.12; max-width: 20ch; margin-bottom: 20px; }
+  h1 em { color: var(--accent-deep); }
+  .sub { font-size: 18px; color: var(--muted); max-width: 60ch; }
+  h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(24px, 3vw, 34px); line-height: 1.2; margin-bottom: 10px; }
+  .eyebrow { font-size: 12px; font-weight: 500; color: var(--accent-deep); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 12px; }
+  .muted { color: var(--muted); }
+  .small { font-size: 13px; }
+
+  .stats { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-top: 40px; }
+  .stat { padding: 26px 20px; }
+  .stat:not(:first-child) { border-left: 1px solid var(--line); }
+  .stat b { display: block; font-family: var(--serif); font-weight: 400; font-size: clamp(26px, 3vw, 38px); line-height: 1.1; }
+  .stat span { font-size: 13px; color: var(--muted); }
+  .asof { font-size: 12px; color: var(--muted); margin-top: 12px; }
+
+  .charts { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; padding: 64px 0; }
+  .chart h3 { font-family: var(--serif); font-weight: 400; font-size: 20px; margin-bottom: 16px; }
+  .bar { display: grid; grid-template-columns: 170px 1fr 64px; gap: 12px; align-items: center; font-size: 13px; padding: 4px 0; }
+  .bar .lbl { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar .track { height: 10px; background: var(--panel); border-radius: 2px; overflow: hidden; }
+  .bar .fill { height: 100%; background: var(--accent); border-radius: 2px; }
+  .bar .n { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .chart + .chart { margin-top: 40px; }
+
+  .band { background: var(--panel); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 72px 0; }
+
+  /* sign-up */
+  .gate { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: start; }
+  .gate ul { list-style: none; display: grid; gap: 10px; margin-top: 18px; }
+  .gate li { display: flex; gap: 10px; color: var(--muted); font-size: 15px; }
+  .gate li::before { content: '✓'; color: var(--accent-deep); font-weight: 600; }
+  form.card, .card { background: var(--paper); border: 1px solid var(--line); border-radius: 2px; padding: 28px; }
+  .field { display: grid; gap: 6px; margin-bottom: 14px; }
+  .field label { font-size: 13px; font-weight: 500; }
+  .field input, .field select, .field textarea, .filters input, .filters select {
+    width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 2px; background: #fff; font-size: 15px;
+  }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .hp { position: absolute; left: -9999px; }
+  .btn { background: var(--accent); color: #fff; font-weight: 600; font-size: 15px; padding: 13px 26px; border: none; border-radius: 2px; cursor: pointer; text-decoration: none; display: inline-block; }
+  .btn:hover { background: var(--accent-deep); }
+  .btn[disabled] { opacity: 0.6; cursor: default; }
+  .btn-line { background: none; border: 1px solid var(--line); padding: 7px 12px; border-radius: 2px; cursor: pointer; font-size: 13px; white-space: nowrap; }
+  .btn-line.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .msg { font-size: 14px; margin-top: 12px; }
+  .msg.err { color: #a14a3b; }
+
+  /* browser */
+  .filters { display: grid; grid-template-columns: 1.2fr 1.4fr 1fr 1.4fr; gap: 10px; margin: 24px 0 10px; }
+  .checks { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; font-size: 14px; margin-bottom: 18px; }
+  .checks label { display: flex; gap: 8px; align-items: center; cursor: pointer; }
+  .count { font-size: 14px; color: var(--muted); margin-bottom: 10px; }
+  .list { border-top: 1px solid var(--line); }
+  .item { display: grid; grid-template-columns: 1fr auto; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); align-items: start; }
+  .item h4 { font-family: var(--serif); font-weight: 400; font-size: 17px; margin-bottom: 4px; }
+  .item .meta { font-size: 13px; color: var(--muted); }
+  .item .fig { font-size: 14px; margin-top: 2px; }
+  .tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 100px; background: var(--panel); color: var(--accent-deep); margin-left: 6px; vertical-align: 1px; }
+  .pager { display: flex; justify-content: space-between; align-items: center; margin: 18px 0 8px; font-size: 14px; }
+  .foot { font-size: 12px; color: var(--muted); margin-top: 8px; }
+
+  .basket { position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 200; max-width: 760px; margin: 0 auto; background: var(--ink); color: var(--paper);
+            border-radius: 4px; padding: 14px 18px; display: none; align-items: center; justify-content: space-between; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+  .basket.show { display: flex; }
+  .basket .btn { padding: 10px 18px; }
+
+  .modal-bg { position: fixed; inset: 0; background: rgba(35,38,43,0.45); z-index: 300; display: none; align-items: center; justify-content: center; padding: 16px; }
+  .modal-bg.show { display: flex; }
+  .modal { background: var(--paper); max-width: 520px; width: 100%; border-radius: 4px; padding: 28px; max-height: 90vh; overflow: auto; }
+  .modal h3 { font-family: var(--serif); font-weight: 400; font-size: 24px; margin-bottom: 10px; }
+  .modal ul { margin: 14px 0 14px 18px; font-size: 14px; color: var(--muted); }
+  .modal .actions { display: flex; gap: 14px; align-items: center; margin-top: 16px; flex-wrap: wrap; }
+
+  footer { padding: 40px 56px 96px; display: flex; justify-content: space-between; gap: 12px; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  footer a { text-decoration: none; }
+
+  @media (max-width: 960px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat:not(:first-child) { border-left: none; }
+    .stat { border-bottom: 1px solid var(--line); }
+    .stat:nth-child(even) { border-left: 1px solid var(--line); }
+    .charts, .gate { grid-template-columns: 1fr; gap: 40px; }
+    .filters { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    nav { padding: 16px; }
+    .nav-links li:not(:last-child) { display: none; }
+    .wrap { padding: 0 16px; }
+    .hero { padding: 48px 0 24px; }
+    .bar { grid-template-columns: 120px 1fr 52px; }
+    .row2, .filters { grid-template-columns: 1fr; }
+    .item { grid-template-columns: 1fr; gap: 10px; }
+    form.card, .card { padding: 20px; }
+    footer { padding: 28px 16px 96px; flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">MANGRO<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#numbers">Numbers</a></li>
+    <li><a href="/deals/">The service</a></li>
+    <li><a href="#listings" class="nav-cta" id="navcta">Browse listings</a></li>
+  </ul>
+</nav>
+
+<div class="wrap">
+  <div class="hero" id="numbers">
+    <div class="kicker">European market map</div>
+    <h1>The European small-business market, <em>live.</em></h1>
+    <p class="sub">Every business-for-sale listing we track across Europe, refreshed every morning. The numbers below are free. Sign up and you can browse the listings themselves by country, sector and size.</p>
+    <div class="stats">
+      <div class="stat"><b id="s-total">…</b><span>live listings</span></div>
+      <div class="stat"><b id="s-countries">…</b><span>countries</span></div>
+      <div class="stat"><b id="s-1m">…</b><span>with turnover of €1M or more</span></div>
+      <div class="stat"><b id="s-earn">…</b><span>state an EBITDA or profit figure</span></div>
+      <div class="stat"><b id="s-ret">…</b><span>owner retiring or handing over</span></div>
+    </div>
+    <p class="asof" id="asof">Listings, not businesses: the same business is often listed on more than one site.</p>
+  </div>
+
+  <div class="charts">
+    <div class="chart"><h3>Listings by country</h3><div id="c-country"></div></div>
+    <div>
+      <div class="chart"><h3>By turnover</h3><div id="c-size"></div></div>
+      <div class="chart"><h3>Largest sectors</h3><div id="c-sector"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="band" id="listings">
+  <div class="wrap">
+
+    <!-- not signed in -->
+    <div class="gate" id="gate">
+      <div>
+        <div class="eyebrow">Browse the listings</div>
+        <h2>See every listing behind these numbers.</h2>
+        <p class="muted">Free. Tell us who you are and we email you an access link.</p>
+        <ul>
+          <li>All live listings across 16 countries, refreshed daily</li>
+          <li>Filter by country, sector, turnover, retirement sales and stated earnings</li>
+          <li>Each listing's figures in one consistent format, in English</li>
+          <li>Want the links to the ones you like? Start a free week and we send them, plus new matches twice a week</li>
+        </ul>
+        <p class="small muted" style="margin-top:18px">We work for buyers, not sellers. We never share your details.</p>
+      </div>
+      <form class="card" id="signup" novalidate>
+        <div class="row2">
+          <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" required></div>
+          <div class="field"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+        </div>
+        <div class="field"><label for="f-li">LinkedIn profile</label><input id="f-li" name="linkedin" placeholder="linkedin.com/in/..." autocomplete="url"></div>
+        <div class="row2">
+          <div class="field"><label for="f-role">What describes you best</label>
+            <select id="f-role" name="role" required>
+              <option value="">Choose…</option>
+              <option>Searcher / ETA buyer</option><option>Independent sponsor</option><option>PE / family office / holdco</option>
+              <option>Investor in searchers</option><option>Student</option><option>Advisor / broker</option><option>Other</option>
+            </select></div>
+          <div class="field"><label for="f-org">Firm, fund or school</label><input id="f-org" name="organisation" autocomplete="organization"></div>
+        </div>
+        <div class="field"><label for="f-countries">Countries you're looking at</label><input id="f-countries" name="countries" placeholder="e.g. UK, Germany, Spain"></div>
+        <div class="row2">
+          <div class="field"><label for="f-sectors">Sectors</label><input id="f-sectors" name="sectors" placeholder="e.g. HVAC, industrial services"></div>
+          <div class="field"><label for="f-size">Deal size</label><input id="f-size" name="size" placeholder="e.g. €500k to €3M EBITDA"></div>
+        </div>
+        <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn" type="submit" id="f-go">Email me access</button>
+        <p class="msg" id="f-msg" role="status"></p>
+      </form>
+    </div>
+
+    <!-- signed in -->
+    <div id="browser" hidden>
+      <div class="eyebrow">Browse the listings</div>
+      <h2>Every live listing, filtered your way.</h2>
+      <p class="muted small">Select the listings you'd like the links to, then start a free week: we send those, plus new matches to your criteria twice a week.</p>
+      <div class="filters">
+        <select id="q-country" aria-label="Country"><option value="">All countries</option></select>
+        <select id="q-sector" aria-label="Sector"><option value="">All sectors</option></select>
+        <select id="q-size" aria-label="Turnover">
+          <option value="">Any turnover</option>
+          <option value="500000-">€500k and above</option>
+          <option value="1000000-" selected>€1M and above</option>
+          <option value="1000000-5000000">€1M to €5M</option>
+          <option value="5000000-25000000">€5M to €25M</option>
+          <option value="25000000-">€25M and above</option>
+        </select>
+        <input id="q-text" type="search" placeholder="Search activity, e.g. HVAC, bakery" aria-label="Search">
+      </div>
+      <div class="checks">
+        <label><input type="checkbox" id="q-ret"> Retirement / succession only</label>
+        <label><input type="checkbox" id="q-earn"> States EBITDA or profit</label>
+        <label>Sort <select id="q-sort" style="padding:6px 8px;border:1px solid var(--line);border-radius:2px;background:#fff"><option value="turnover">Largest first</option><option value="newest">Newest first</option></select></label>
+      </div>
+      <div class="count" id="count"></div>
+      <div class="list" id="list"></div>
+      <div class="pager"><button class="btn-line" id="prev">← Previous</button><span id="pageinfo" class="muted"></span><button class="btn-line" id="next">Next →</button></div>
+      <p class="foot">* stated by the listing as a result or profit figure without saying whether it is EBITDA. Figures are as each listing states them; turnover filters convert other currencies to euros approximately.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="/" class="nav-logo" style="font-size:16px">MANGRO<span>.</span></a>
+  <a href="/deals/">The deal-flow service</a>
+  <span>© 2026 Mangrosystems</span>
+</footer>
+
+<div class="basket" id="basket"><span id="basket-n"></span><button class="btn" id="basket-go">Get the links</button></div>
+
+<div class="modal-bg" id="modal" role="dialog" aria-modal="true" aria-labelledby="m-title">
+  <div class="modal">
+    <h3 id="m-title">Get the links with a free week</h3>
+    <p class="muted">We send you the links to the listings you picked, then up to five new matches to your criteria every Tuesday and Friday for a week. No card, nothing to cancel.</p>
+    <ul id="m-list"></ul>
+    <div class="field"><label for="m-note">Anything we should know? (optional)</label><textarea id="m-note" rows="3" placeholder="e.g. only owner-managed, no real estate"></textarea></div>
+    <div class="actions"><button class="btn" id="m-go">Start my free week</button><button class="btn-line" id="m-cancel">Not now</button></div>
+    <p class="msg" id="m-msg" role="status"></p>
+  </div>
+</div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var fmt = function (n) { return Number(n).toLocaleString("en-GB"); };
+  var track = function (evt, extra) { try { window.mgTrack && window.mgTrack(evt, extra); } catch (e) {} };
+
+  // ---------- token ----------
+  var TOKEN_KEY = "mg_market_token", token = null;
+  try {
+    var qs = new URLSearchParams(location.search);
+    if (qs.get("t")) {
+      token = qs.get("t");
+      localStorage.setItem(TOKEN_KEY, token);
+      qs.delete("t");
+      history.replaceState(null, "", location.pathname + (qs.toString() ? "?" + qs : "") + "#listings");
+      fetch("/api/market-trial", { method: "POST", headers: { "Content-Type": "application/json", "x-market-token": token }, body: JSON.stringify({ confirm: true }) }).catch(function () {});
+    } else {
+      token = localStorage.getItem(TOKEN_KEY);
+    }
+  } catch (e) {}
+
+  // ---------- public numbers ----------
+  function bars(el, items, total) {
+    var max = Math.max.apply(null, items.map(function (i) { return i[1]; })) || 1;
+    el.textContent = "";
+    items.forEach(function (i) {
+      var row = document.createElement("div"); row.className = "bar";
+      var l = document.createElement("span"); l.className = "lbl"; l.textContent = i[0]; l.title = i[0];
+      var t = document.createElement("span"); t.className = "track";
+      var f = document.createElement("span"); f.className = "fill"; f.style.width = Math.max(1, i[1] / max * 100) + "%"; f.style.display = "block";
+      t.appendChild(f);
+      var n = document.createElement("span"); n.className = "n"; n.textContent = fmt(i[1]);
+      row.appendChild(l); row.appendChild(t); row.appendChild(n); el.appendChild(row);
+    });
+  }
+  var down = function (n, step) { return Math.floor(n / step) * step; };
+
+  fetch("/api/market-stats").then(function (r) { return r.json(); }).then(function (s) {
+    var real = s.countries.filter(function (c) { return c[0] !== "Other / unknown"; });
+    $("s-total").textContent = fmt(down(s.total, 1000)) + "+";
+    $("s-countries").textContent = real.length;
+    $("s-1m").textContent = fmt(down(s.turnover_over_1m, 1000)) + "+";
+    $("s-earn").textContent = fmt(down(s.with_earnings, 1000)) + "+";
+    $("s-ret").textContent = fmt(down(s.retirement, 1000)) + "+";
+    $("asof").textContent = "Updated " + new Date(s.as_of + "T12:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) +
+      ". Listings, not businesses: the same business is often listed on more than one site.";
+    bars($("c-country"), s.countries, s.total);
+    bars($("c-size"), s.turnover_bands);
+    bars($("c-sector"), s.sectors.slice(0, 12));
+    real.forEach(function (c) { var o = document.createElement("option"); o.value = o.textContent = c[0]; $("q-country").appendChild(o); });
+    var o = document.createElement("option"); o.value = o.textContent = "Other / unknown"; $("q-country").appendChild(o);
+    s.sectors.slice().sort(function (a, b) { return a[0].localeCompare(b[0]); }).forEach(function (c) {
+      var o = document.createElement("option"); o.value = c[0]; o.textContent = c[0] + " (" + fmt(c[1]) + ")"; $("q-sector").appendChild(o);
+    });
+  }).catch(function () { $("asof").textContent = "The numbers could not be loaded just now. Please refresh in a minute."; });
+
+  // ---------- sign-up ----------
+  $("signup").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var f = e.target, msg = $("f-msg"), go = $("f-go");
+    var data = {}; new FormData(f).forEach(function (v, k) { data[k] = v; });
+    var q = new URLSearchParams(location.search);
+    data.source = ["utm_source", "utm_medium", "utm_campaign"].map(function (k) { return q.get(k) ? k.slice(4) + "=" + q.get(k) : ""; }).filter(Boolean).join(" ") || (document.referrer || "direct");
+    if (!data.name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email || "") || !data.role) {
+      msg.className = "msg err"; msg.textContent = "Please give your name, email and what describes you best."; return;
+    }
+    go.disabled = true; msg.className = "msg"; msg.textContent = "Sending…";
+    fetch("/api/market-signup", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (x) {
+        if (!x.ok) throw new Error(x.j.error || "error");
+        track("signup", { cta: data.role });
+        if (x.j.token) {                         // access handed back directly (no email step configured)
+          token = x.j.token; try { localStorage.setItem(TOKEN_KEY, token); } catch (e) {}
+          fetch("/api/market-trial", { method: "POST", headers: { "Content-Type": "application/json", "x-market-token": token }, body: JSON.stringify({ confirm: true }) }).catch(function () {});
+          $("gate").hidden = true; $("browser").hidden = false; load(); return;
+        }
+        f.innerHTML = '<h3 style="font-family:var(--serif);font-weight:400;font-size:22px;margin-bottom:8px">Check your inbox</h3>' +
+          '<p class="muted">We sent your access link to <b></b>. It can take a minute; check spam if it doesn\'t arrive.</p>';
+        f.querySelector("b").textContent = data.email;
+      })
+      .catch(function (err) { go.disabled = false; msg.className = "msg err"; msg.textContent = err.message === "error" ? "Something went wrong. Please try again." : err.message; });
+  });
+
+  // ---------- browser ----------
+  var state = { page: 1 }, picked = {};
+  function params() {
+    var size = $("q-size").value.split("-");
+    var p = new URLSearchParams({ page: state.page, sort: $("q-sort").value });
+    if ($("q-country").value) p.set("country", $("q-country").value);
+    if ($("q-sector").value) p.set("sector", $("q-sector").value);
+    if (size[0]) p.set("tmin", size[0]);
+    if (size[1]) p.set("tmax", size[1]);
+    if ($("q-ret").checked) p.set("ret", "1");
+    if ($("q-earn").checked) p.set("earn", "1");
+    if ($("q-text").value.trim()) p.set("q", $("q-text").value.trim());
+    return p;
+  }
+  function signOut() {
+    try { localStorage.removeItem(TOKEN_KEY); } catch (e) {}
+    token = null; $("browser").hidden = true; $("gate").hidden = false;
+  }
+  function load() {
+    $("count").textContent = "Loading…";
+    fetch("/api/market?" + params(), { headers: { "x-market-token": token } })
+      .then(function (r) { if (r.status === 401) { signOut(); throw new Error("signin"); } return r.json(); })
+      .then(render)
+      .catch(function (e) { if (e.message !== "signin") $("count").textContent = "The listings could not be loaded just now. Please try again."; });
+  }
+  function render(d) {
+    $("count").textContent = fmt(d.total) + " listing" + (d.total === 1 ? "" : "s") + " match";
+    $("pageinfo").textContent = "Page " + d.page + " of " + fmt(d.pages);
+    $("prev").disabled = d.page <= 1; $("next").disabled = d.page >= d.pages;
+    var list = $("list"); list.textContent = "";
+    d.rows.forEach(function (r) {
+      var it = document.createElement("div"); it.className = "item";
+      var body = document.createElement("div");
+      var h = document.createElement("h4"); h.textContent = r.activity || r.sector;
+      if (r.reason === "Retirement / succession") { var t = document.createElement("span"); t.className = "tag"; t.textContent = "Retirement"; h.appendChild(t); }
+      var meta = document.createElement("div"); meta.className = "meta";
+      meta.textContent = [r.region, r.country].filter(Boolean).join(", ") + " · " + r.sector + (r.reason && r.reason !== "Retirement / succession" ? " · Reason: " + r.reason : "");
+      var fig = document.createElement("div"); fig.className = "fig"; fig.textContent = r.figures || "Figures not stated";
+      body.appendChild(h); body.appendChild(meta); body.appendChild(fig);
+      var b = document.createElement("button"); b.className = "btn-line" + (picked[r.key] ? " on" : "");
+      b.textContent = picked[r.key] ? "Selected ✓" : "Get link";
+      b.addEventListener("click", function () {
+        if (picked[r.key]) delete picked[r.key]; else picked[r.key] = r;
+        b.className = "btn-line" + (picked[r.key] ? " on" : ""); b.textContent = picked[r.key] ? "Selected ✓" : "Get link";
+        basket();
+      });
+      it.appendChild(body); it.appendChild(b); list.appendChild(it);
+    });
+  }
+  function basket() {
+    var n = Object.keys(picked).length;
+    $("basket").className = "basket" + (n ? " show" : "");
+    $("basket-n").textContent = n + " listing" + (n === 1 ? "" : "s") + " selected";
+  }
+  var timer;
+  ["q-country", "q-sector", "q-size", "q-sort", "q-ret", "q-earn"].forEach(function (id) { $(id).addEventListener("change", function () { state.page = 1; load(); }); });
+  $("q-text").addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(function () { state.page = 1; load(); }, 350); });
+  $("prev").addEventListener("click", function () { state.page--; load(); $("listings").scrollIntoView(); });
+  $("next").addEventListener("click", function () { state.page++; load(); $("listings").scrollIntoView(); });
+
+  $("basket-go").addEventListener("click", function () {
+    var ul = $("m-list"); ul.textContent = "";
+    Object.keys(picked).forEach(function (k) { var li = document.createElement("li"); li.textContent = (picked[k].activity || picked[k].sector) + " (" + picked[k].country + ")"; ul.appendChild(li); });
+    $("m-msg").textContent = ""; $("m-go").disabled = false; $("modal").className = "modal-bg show";
+    track("cta_click", { cta: "Get the links (" + Object.keys(picked).length + ")" });
+  });
+  $("m-cancel").addEventListener("click", function () { $("modal").className = "modal-bg"; });
+  $("modal").addEventListener("click", function (e) { if (e.target === $("modal")) $("modal").className = "modal-bg"; });
+  $("m-go").addEventListener("click", function () {
+    var keys = Object.keys(picked); $("m-go").disabled = true; $("m-msg").className = "msg"; $("m-msg").textContent = "Sending…";
+    fetch("/api/market-trial", { method: "POST", headers: { "Content-Type": "application/json", "x-market-token": token }, body: JSON.stringify({ keys: keys, note: $("m-note").value }) })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (x) {
+        if (!x.ok) throw new Error(x.j.error || "Something went wrong. Please try again.");
+        track("trial_request", { cta: keys.length + " listings" });
+        $("m-msg").textContent = "Done. You'll hear from me by email within one working day, with the links and your first matches.";
+        picked = {}; basket(); load();
+      })
+      .catch(function (e) { $("m-go").disabled = false; $("m-msg").className = "msg err"; $("m-msg").textContent = e.message; });
+  });
+
+  if (token) {
+    $("gate").hidden = true; $("browser").hidden = false; $("navcta").textContent = "Browse listings"; load();
+  } else {
+    $("navcta").textContent = "Get free access";
+  }
+})();
+</script>
+<script src="/assets/track.js" defer></script>
+</body>
+</html>

@@ -8,8 +8,8 @@
 //   NOTION_EVENTS_DB_ID    optional override of the default below
 
 const DEFAULT_EVENTS_DB_ID = "41ec1acc-9ddb-817e-beff-ffec78e168ff";
-const VALID_EVENTS = new Set(["pageview", "cta_click"]);
-const VALID_PAGES = new Set(["/", "/deals/"]);
+const VALID_EVENTS = new Set(["pageview", "cta_click", "signup", "trial_request"]);
+const VALID_PAGES = new Set(["/", "/deals/", "/market/"]);
 const BOT_RE = /bot|crawl|spider|slurp|preview|headless|lighthouse|monitor|curl|wget|python|vercel/i;
 
 function text(value) {
