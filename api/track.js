@@ -8,7 +8,7 @@
 //   NOTION_EVENTS_DB_ID    optional override of the default below
 
 const DEFAULT_EVENTS_DB_ID = "41ec1acc-9ddb-817e-beff-ffec78e168ff";
-const VALID_EVENTS = new Set(["pageview", "cta_click", "signup", "trial_request"]);
+const VALID_EVENTS = new Set(["pageview", "pageleave", "cta_click", "signup", "trial_request"]);
 const VALID_PAGES = new Set(["/", "/deals/", "/market/"]);
 const BOT_RE = /bot|crawl|spider|slurp|preview|headless|lighthouse|monitor|curl|wget|python|vercel/i;
 
@@ -60,6 +60,20 @@ export default async function handler(req, res) {
     Device: { select: { name: device } }
   };
   if (body.cta) properties.CTA = { rich_text: text(body.cta) };
+
+  // visitor details, to tell real people from automated browsers
+  const screenSize = String(body.screen || "").slice(0, 20);
+  const tz = String(body.timezone || "").slice(0, 60);
+  const webdriver = body.webdriver === true;
+  properties["User Agent"] = { rich_text: text(ua.slice(0, 300)) };
+  properties.Screen = { rich_text: text(screenSize) };
+  properties.Timezone = { rich_text: text(tz) };
+  properties.Language = { rich_text: text(String(body.language || "").slice(0, 30)) };
+  properties["Automated browser"] = { checkbox: webdriver };
+  if (Number.isFinite(body.seconds)) properties["Seconds on page"] = { number: Math.max(0, Math.min(86400, body.seconds)) };
+  // likely bot: automation flag, no/server timezone, or an empty screen
+  const likelyBot = webdriver || !tz || /^(UTC|Etc\/)/.test(tz) || /^0x|x0$/.test(screenSize);
+  properties["Likely bot"] = { checkbox: likelyBot };
 
   const r = await fetch("https://api.notion.com/v1/pages", {
     method: "POST",

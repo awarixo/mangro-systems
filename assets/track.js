@@ -17,14 +17,21 @@
   } catch (e) { sid = "no-storage"; }
 
   var q = new URLSearchParams(location.search);
+  var tz = "";
+  try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) {}
   var base = {
     page: page,
     session_id: sid,
     referrer: document.referrer || "",
     utm_source: q.get("utm_source") || "",
     utm_medium: q.get("utm_medium") || "",
-    utm_campaign: q.get("utm_campaign") || ""
+    utm_campaign: q.get("utm_campaign") || "",
+    screen: (screen.width || 0) + "x" + (screen.height || 0),
+    timezone: tz,
+    language: navigator.language || "",
+    webdriver: navigator.webdriver === true
   };
+  var started = Date.now(), left = false;
 
   function send(evt, extra) {
     var data = Object.assign({ event_type: evt }, base, extra || {});
@@ -37,6 +44,15 @@
 
   window.mgTrack = send;
   send("pageview");
+
+  // one "pageleave" per page load with the seconds spent (bots usually never send it)
+  function leave() {
+    if (left) return;
+    left = true;
+    send("pageleave", { seconds: Math.round((Date.now() - started) / 1000) });
+  }
+  document.addEventListener("visibilitychange", function () { if (document.visibilityState === "hidden") leave(); });
+  window.addEventListener("pagehide", leave);
 
   document.addEventListener("click", function (e) {
     var a = e.target.closest && e.target.closest("a");
